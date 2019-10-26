@@ -75,6 +75,9 @@ void Start_ds18b20_task(void const * argument);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 float temp;
+uint8_t numbers[10] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x67};
+uint8_t temp_int;
+
 TM_OneWire_t OW;
 uint8_t DS_ROM[8];
 
@@ -89,6 +92,11 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 	TM_RCC_InitSystem();
+
+	GPIOC->ODR=0xff;
+
+
+
   /* USER CODE END 1 */
   
 
@@ -187,9 +195,12 @@ int main(void)
 	  	                      /* Start again on all sensors */
 	  	                      TM_DS18B20_StartAll(&OW);
 
+	  	                      temp_int = ((uint8_t) temp) % 10;
+	  	                      GPIOC->ODR=numbers[temp_int];
+
 	  	                      /* Check temperature */
 
-	  	                      vTaskDelay(100);
+	  	                      vTaskDelay(500);
 
 	  	                  } else {
 	  	                      /* CRC failed, hardware problems on data line */
