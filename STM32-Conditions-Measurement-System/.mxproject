@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=C:/Users/Rafal/Desktop/Inzynierka/Temp1/Inc
+HeaderPath=C:/Users/Rafal/Documents/GitHub/Conditions-Measurement-System/STM32-Conditions-Measurement-System/Inc
 HeaderFiles=FreeRTOSConfig.h;stm32f4xx_it.h;stm32f4xx_hal_conf.h;main.h;
-SourcePath=C:/Users/Rafal/Desktop/Inzynierka/Temp1/Src
+SourcePath=C:/Users/Rafal/Documents/GitHub/Conditions-Measurement-System/STM32-Conditions-Measurement-System/Src
 SourceFiles=freertos.c;stm32f4xx_it.c;stm32f4xx_hal_msp.c;stm32f4xx_hal_timebase_tim.c;main.c;
 
 [PreviousLibFiles]

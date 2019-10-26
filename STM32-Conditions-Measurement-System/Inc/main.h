@@ -58,8 +58,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define B1_Pin GPIO_PIN_13
-#define B1_GPIO_Port GPIOC
+#define BlueB_Pin GPIO_PIN_13
+#define BlueB_GPIO_Port GPIOC
 #define A_Pin GPIO_PIN_0
 #define A_GPIO_Port GPIOC
 #define B_Pin GPIO_PIN_1
@@ -78,6 +78,12 @@ void Error_Handler(void);
 #define E_GPIO_Port GPIOC
 #define F_Pin GPIO_PIN_5
 #define F_GPIO_Port GPIOC
+#define A1_Pin GPIO_PIN_0
+#define A1_GPIO_Port GPIOB
+#define B1_Pin GPIO_PIN_1
+#define B1_GPIO_Port GPIOB
+#define C1_Pin GPIO_PIN_2
+#define C1_GPIO_Port GPIOB
 #define G_Pin GPIO_PIN_6
 #define G_GPIO_Port GPIOC
 #define H_Pin GPIO_PIN_7
@@ -90,6 +96,14 @@ void Error_Handler(void);
 #define TCK_GPIO_Port GPIOA
 #define SWO_Pin GPIO_PIN_3
 #define SWO_GPIO_Port GPIOB
+#define D1_Pin GPIO_PIN_4
+#define D1_GPIO_Port GPIOB
+#define E1_Pin GPIO_PIN_5
+#define E1_GPIO_Port GPIOB
+#define F1_Pin GPIO_PIN_6
+#define F1_GPIO_Port GPIOB
+#define G1_Pin GPIO_PIN_7
+#define G1_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 #define PC0_ON()			(A_GPIO_Port->BSRR = (A_Pin))
 #define PC0_OFF()			(A_GPIO_Port->BSRR = (A_Pin)<<16)
