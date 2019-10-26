@@ -96,13 +96,13 @@ void Error_Handler(void);
 #define TCK_GPIO_Port GPIOA
 #define SWO_Pin GPIO_PIN_3
 #define SWO_GPIO_Port GPIOB
-#define D1_Pin GPIO_PIN_4
+#define D1_Pin GPIO_PIN_3
 #define D1_GPIO_Port GPIOB
-#define E1_Pin GPIO_PIN_5
+#define E1_Pin GPIO_PIN_4
 #define E1_GPIO_Port GPIOB
-#define F1_Pin GPIO_PIN_6
+#define F1_Pin GPIO_PIN_5
 #define F1_GPIO_Port GPIOB
-#define G1_Pin GPIO_PIN_7
+#define G1_Pin GPIO_PIN_6
 #define G1_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 #define PC0_ON()			(A_GPIO_Port->BSRR = (A_Pin))

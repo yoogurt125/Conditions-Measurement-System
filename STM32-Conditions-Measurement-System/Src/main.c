@@ -76,7 +76,8 @@ void Start_ds18b20_task(void const * argument);
 /* USER CODE BEGIN 0 */
 float temp;
 uint8_t numbers[10] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x67};
-uint8_t temp_int;
+uint8_t temp_int_units;
+uint8_t temp_int_decimals;
 
 TM_OneWire_t OW;
 uint8_t DS_ROM[8];
@@ -94,7 +95,7 @@ int main(void)
 	TM_RCC_InitSystem();
 
 	GPIOC->ODR=0xff;
-
+	GPIOB->ODR=0xff;
 
 
   /* USER CODE END 1 */
@@ -195,8 +196,12 @@ int main(void)
 	  	                      /* Start again on all sensors */
 	  	                      TM_DS18B20_StartAll(&OW);
 
-	  	                      temp_int = ((uint8_t) temp) % 10;
-	  	                      GPIOC->ODR=numbers[temp_int];
+	  	                      temp_int_units = ((uint8_t) temp) % 10;
+	  	                      temp_int_decimals = ((uint8_t) temp) / 10;
+
+	  	                      GPIOB->ODR=numbers[temp_int_decimals];
+	  	                      GPIOC->ODR=numbers[temp_int_units];
+
 
 	  	                      /* Check temperature */
 
@@ -369,6 +374,9 @@ static void MX_GPIO_Init(void)
                           |E_Pin|F_Pin|G_Pin|H_Pin 
                           |DS18B20_Pin, GPIO_PIN_RESET);
 
+  HAL_GPIO_WritePin(GPIOB, A1_Pin|B1_Pin|C1_Pin|D1_Pin|BlueB_Pin
+                          |E1_Pin|F1_Pin|G1_Pin, GPIO_PIN_RESET);
+
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
 
@@ -395,6 +403,20 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : A1_Pin B1_Pin C1_Pin D1_Pin
+                           E1_Pin F1_Pin G1_Pin */
+
+  GPIO_InitStruct.Pin = A1_Pin|B1_Pin|C1_Pin|D1_Pin|BlueB_Pin
+                          |E1_Pin|F1_Pin|G1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+
+
+
 
 }
 
@@ -438,25 +460,7 @@ void Start_ds18b20_task(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-	//  if (TM_DS18B20_Is(DS_ROM)) {
-	              /* Everything is done */
-	              if (TM_DS18B20_AllDone(&OW)) {
-	                  /* Read temperature from device */
-	                  if (TM_DS18B20_Read(&OW, DS_ROM, &temp)) {
-	                      /* Temp read OK, CRC is OK */
 
-	                      /* Start again on all sensors */
-	                      TM_DS18B20_StartAll(&OW);
-
-	                      /* Check temperature */
-
-	                      vTaskDelay(100);
-
-	                  } else {
-	                      /* CRC failed, hardware problems on data line */
-	                  }
-	              }
-	          //}
   }
   /* USER CODE END Start_ds18b20_task */
 }
