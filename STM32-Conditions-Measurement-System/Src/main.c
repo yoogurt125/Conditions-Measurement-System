@@ -175,8 +175,8 @@ int main(void)
   /* USER CODE END RTOS_THREADS */
 
   /* Start scheduler */
-  
-  //osKernelStart();
+
+ osKernelStart();
 
   /* We should never get here as control is now taken by the scheduler */
 
@@ -185,6 +185,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+<<<<<<< Updated upstream
 //	    if (TM_DS18B20_Is(DS_ROM)) {
 	  	              /* Everything is done */
 	  	              if (TM_DS18B20_AllDone(&OW)) {
@@ -207,6 +208,9 @@ int main(void)
 	  	                  }
 	  	             // }
 	  	          }
+=======
+
+>>>>>>> Stashed changes
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -417,8 +421,8 @@ void StartDefaultTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-      LD2_TOGGLE();
-      vTaskDelay(100);
+//      LD2_TOGGLE();
+//      vTaskDelay(1000);
   }
   /* USER CODE END 5 */ 
 }
@@ -438,6 +442,7 @@ void Start_ds18b20_task(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+<<<<<<< Updated upstream
 	//  if (TM_DS18B20_Is(DS_ROM)) {
 	              /* Everything is done */
 	              if (TM_DS18B20_AllDone(&OW)) {
@@ -451,6 +456,34 @@ void Start_ds18b20_task(void const * argument)
 	                      /* Check temperature */
 
 	                      vTaskDelay(100);
+=======
+	    if (TM_DS18B20_Is(DS_ROM)) {
+	  	              /* Everything is done */
+	  	              if (TM_DS18B20_AllDone(&OW)) {
+	  	                  /* Read temperature from device */
+	  	                  if (TM_DS18B20_Read(&OW, DS_ROM, &temp)) {
+	  	                      /* Temp read OK, CRC is OK */
+
+	  	                      /* Start again on all sensors */
+	  	                      TM_DS18B20_StartAll(&OW);
+
+	  	                      temp_int_units = ((uint8_t) temp) % 10;
+	  	                      temp_int_decimals = ((uint8_t) temp) / 10;
+
+	  	                      GPIOB->ODR=numbers[temp_int_decimals];
+	  	                      GPIOC->ODR=numbers[temp_int_units];
+
+
+	  	                      /* Check temperature */
+
+	  	                      vTaskDelay(500);
+
+	  	                  } else {
+	  	                      /* CRC failed, hardware problems on data line */
+	  	                  }
+	  	              }
+	  	          }
+>>>>>>> Stashed changes
 
 	                  } else {
 	                      /* CRC failed, hardware problems on data line */
