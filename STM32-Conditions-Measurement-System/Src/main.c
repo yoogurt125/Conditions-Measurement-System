@@ -177,7 +177,7 @@ int main(void)
 
   /* Start scheduler */
   
-  //osKernelStart();
+ osKernelStart();
 
   /* We should never get here as control is now taken by the scheduler */
 
@@ -186,32 +186,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-//	    if (TM_DS18B20_Is(DS_ROM)) {
-	  	              /* Everything is done */
-	  	              if (TM_DS18B20_AllDone(&OW)) {
-	  	                  /* Read temperature from device */
-	  	                  if (TM_DS18B20_Read(&OW, DS_ROM, &temp)) {
-	  	                      /* Temp read OK, CRC is OK */
 
-	  	                      /* Start again on all sensors */
-	  	                      TM_DS18B20_StartAll(&OW);
-
-	  	                      temp_int_units = ((uint8_t) temp) % 10;
-	  	                      temp_int_decimals = ((uint8_t) temp) / 10;
-
-	  	                      GPIOB->ODR=numbers[temp_int_decimals];
-	  	                      GPIOC->ODR=numbers[temp_int_units];
-
-
-	  	                      /* Check temperature */
-
-	  	                      vTaskDelay(500);
-
-	  	                  } else {
-	  	                      /* CRC failed, hardware problems on data line */
-	  	                  }
-	  	             // }
-	  	          }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -460,7 +435,32 @@ void Start_ds18b20_task(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+	  	    if (TM_DS18B20_Is(DS_ROM)) {
+	  	  	              /* Everything is done */
+	  	  	              if (TM_DS18B20_AllDone(&OW)) {
+	  	  	                  /* Read temperature from device */
+	  	  	                  if (TM_DS18B20_Read(&OW, DS_ROM, &temp)) {
+	  	  	                      /* Temp read OK, CRC is OK */
 
+	  	  	                      /* Start again on all sensors */
+	  	  	                      TM_DS18B20_StartAll(&OW);
+
+	  	  	                      temp_int_units = ((uint8_t) temp) % 10;
+	  	  	                      temp_int_decimals = ((uint8_t) temp) / 10;
+
+	  	  	                      GPIOB->ODR=numbers[temp_int_decimals];
+	  	  	                      GPIOC->ODR=numbers[temp_int_units];
+
+
+	  	  	                      /* Check temperature */
+
+	  	  	                      vTaskDelay(500);
+
+	  	  	                  } else {
+	  	  	                      /* CRC failed, hardware problems on data line */
+	  	  	                  }
+	  	  	              }
+	  	  	          }
   }
   /* USER CODE END Start_ds18b20_task */
 }
