@@ -185,7 +185,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-<<<<<<< Updated upstream
+
 //	    if (TM_DS18B20_Is(DS_ROM)) {
 	  	              /* Everything is done */
 	  	              if (TM_DS18B20_AllDone(&OW)) {
@@ -208,9 +208,8 @@ int main(void)
 	  	                  }
 	  	             // }
 	  	          }
-=======
 
->>>>>>> Stashed changes
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -442,7 +441,7 @@ void Start_ds18b20_task(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-<<<<<<< Updated upstream
+
 	//  if (TM_DS18B20_Is(DS_ROM)) {
 	              /* Everything is done */
 	              if (TM_DS18B20_AllDone(&OW)) {
@@ -456,7 +455,7 @@ void Start_ds18b20_task(void const * argument)
 	                      /* Check temperature */
 
 	                      vTaskDelay(100);
-=======
+
 	    if (TM_DS18B20_Is(DS_ROM)) {
 	  	              /* Everything is done */
 	  	              if (TM_DS18B20_AllDone(&OW)) {
@@ -483,7 +482,7 @@ void Start_ds18b20_task(void const * argument)
 	  	                  }
 	  	              }
 	  	          }
->>>>>>> Stashed changes
+
 
 	                  } else {
 	                      /* CRC failed, hardware problems on data line */
