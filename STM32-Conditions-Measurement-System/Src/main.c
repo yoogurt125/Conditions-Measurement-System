@@ -26,6 +26,7 @@
 #include "tm_stm32_delay.h"
 #include "tm_stm32_rcc.h"
 #include "defines.h"
+#include <stdbool.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -75,9 +76,13 @@ void Start_ds18b20_task(void const * argument);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 float temp;
+float TempC, Humidity;
 uint8_t numbers[10] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x67};
 uint8_t temp_int_units;
 uint8_t temp_int_decimals;
+uint8_t humidity_int_units;
+uint8_t humidity_int_decimals;
+bool boolVar=true;
 
 TM_OneWire_t OW;
 uint8_t DS_ROM[8];
@@ -352,8 +357,18 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOB, A1_Pin|B1_Pin|C1_Pin|D1_Pin|BlueB_Pin
                           |E1_Pin|F1_Pin|G1_Pin, GPIO_PIN_RESET);
 
+  HAL_GPIO_WritePin(DHT11_GPIO_Port, DHT11_Pin, GPIO_PIN_RESET);
+
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+
+
+  /*Configure GPIO pins : DHT11_Pin */
+  GPIO_InitStruct.Pin = DHT11_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(DHT11_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
@@ -435,6 +450,8 @@ void Start_ds18b20_task(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+	  if(HAL_GPIO_ReadPin(BlueB_GPIO_Port, BlueB_Pin))
+	  {
 	  	    if (TM_DS18B20_Is(DS_ROM)) {
 	  	  	              /* Everything is done */
 	  	  	              if (TM_DS18B20_AllDone(&OW)) {
@@ -461,6 +478,23 @@ void Start_ds18b20_task(void const * argument)
 	  	  	                  }
 	  	  	              }
 	  	  	          }
+	  	    boolVar = false;
+	  }
+	  else if(HAL_GPIO_ReadPin(BlueB_GPIO_Port, BlueB_Pin) == GPIO_PIN_RESET)
+	  {
+
+		  GPIOB->ODR=numbers[1];
+		  GPIOC->ODR=numbers[0];
+		  boolVar = true;
+	  }
+
+
+
+
+
+
+
+
   }
   /* USER CODE END Start_ds18b20_task */
 }
