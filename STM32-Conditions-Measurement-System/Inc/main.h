@@ -106,6 +106,8 @@ void Error_Handler(void);
 #define F1_GPIO_Port GPIOB
 #define G1_Pin GPIO_PIN_6
 #define G1_GPIO_Port GPIOB
+#define HC05_Pin GPIO_PIN_13
+#define HC05_GPIO_PORT GPIOB
 /* USER CODE BEGIN Private defines */
 #define PC0_ON()			(A_GPIO_Port->BSRR = (A_Pin))
 #define PC0_OFF()			(A_GPIO_Port->BSRR = (A_Pin)<<16)
